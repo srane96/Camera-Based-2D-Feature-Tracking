@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
     bool bVis = false;            // visualize results
 
     /* MAIN LOOP OVER ALL IMAGES */
-
+    ofstream csv("../output2.csv", ios_base::app);
     for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex++)
     {
         /* LOAD IMAGE INTO BUFFER */
@@ -79,16 +79,17 @@ int main(int argc, const char *argv[])
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
         string detectorType;
         //detectorType = "SHITOMASI";
-        detectorType = "HARRIS";
+        //detectorType = "HARRIS";
         //detectorType = "FAST";
         //detectorType = "BRISK";
         //detectorType = "ORB";
         //detectorType = "AKAZE";
-        //detectorType = "SIFT";
+        detectorType = "SIFT";
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
-
+        csv << detectorType << ",";
+        double t = (double)cv::getTickCount();
         if (detectorType.compare("SHITOMASI") == 0)
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
@@ -106,7 +107,8 @@ int main(int argc, const char *argv[])
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.3 -> only keep keypoints on the preceding vehicle
-
+        t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+        csv << 1000 * t / 1.0 << "ms,";
         // only keep keypoints on the preceding vehicle
         bool bFocusOnVehicle = true;
         cv::Rect vehicleRect(535, 180, 180, 150);
@@ -149,17 +151,21 @@ int main(int argc, const char *argv[])
 
         cv::Mat descriptors;
         string descriptorType;
-        descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
+        //descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
         //descriptorType = "BRIEF";
         //descriptorType = "ORB";
         //descriptorType = "FREAK";
         //descriptorType = "AKAZE";
-        //descriptorType = "SIFT";
+        descriptorType = "SIFT";
         descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
         //// EOF STUDENT ASSIGNMENT
-
+        t = (double)cv::getTickCount();
+        csv << descriptorType << ",";
         // push descriptors for current frame to end of data buffer
         (dataBuffer.end() - 1)->descriptors = descriptors;
+
+        t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+        csv << 1000 * t / 1.0 << "ms,";
 
         cout << "#3 : EXTRACT DESCRIPTORS done" << endl;
 
@@ -170,7 +176,8 @@ int main(int argc, const char *argv[])
 
             vector<cv::DMatch> matches;
             string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
-            string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
+            //string matcherType = "MAT_FLANN";
+            //string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
             string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
             //// STUDENT ASSIGNMENT
@@ -185,7 +192,7 @@ int main(int argc, const char *argv[])
             std::cout << "Total Matches found " << matches.size() << std::endl;
             // store matches in current data frame
             (dataBuffer.end() - 1)->kptMatches = matches;
-
+            csv << matches.size() << ",\n";
             cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
 
             // visualize matches between current and previous image
@@ -207,8 +214,8 @@ int main(int argc, const char *argv[])
             }
             bVis = false;
         }
-
+    
     } // eof loop over all images
-
+    csv.close();
     return 0;
 }
