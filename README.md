@@ -1,15 +1,6 @@
-# SFND 2D Feature Tracking
+# Camera-Based 2D Feature Tracking
 
 <img src="images/keypoints.png" width="820" height="248" />
-
-The idea of the camera course is to build a collision detection system - that's the overall goal for the Final Project. As a preparation for this, you will now build the feature tracking part and test various detector / descriptor combinations to see which ones perform best. This mid-term project consists of four parts:
-
-* First, you will focus on loading images, setting up data structures and putting everything into a ring buffer to optimize memory load. 
-* Then, you will integrate several keypoint detectors such as HARRIS, FAST, BRISK and SIFT and compare them with regard to number of keypoints and speed. 
-* In the next part, you will then focus on descriptor extraction and matching using brute force and also the FLANN approach we discussed in the previous lesson. 
-* In the last part, once the code framework is complete, you will test the various algorithms in different combinations and compare them with regard to some performance measures. 
-
-See the classroom instruction and code comments for more details on each of these parts. Once you are finished with this project, the keypoint matching part will be set up and you can proceed to the next lesson, where the focus is on integrating Lidar points and on object detection using deep-learning. 
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
@@ -32,3 +23,27 @@ See the classroom instruction and code comments for more details on each of thes
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./2D_feature_tracking`.
+
+## MP.1 Data Buffer Optimization
+The goal of this section was to implement a vector for dataBuffer objects whose size does not exceed a limit (e.g. 2 elements). This was achieved by removing the first eleent everytime size of data buffer exceeded the max limit. (line 68-69)
+
+## MP.2 Keypoint Detection
+The goal of this section was to implement different detectors (HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT) and make them selectable by setting a string accordingly. For this, different string names are created (line 81-87), and depending upon the uncommented string, a different function is called (line 93-104). In case of Harris-Corner detection, custom non-max supression code was implemented.(matching2D_student.cpp line 163 - 197)
+
+## MP.3 Keypoint Removal
+The goal of this section was to remove all keypoints outside of the car which is in front of the camera. For this a cv::Rect was defined roughly at the center of the image, and only those keypoints were kept which were inside this rectangle (line 114-124)
+
+## MP.4 Keypoint Descriptors
+The goal of this section was to implement different types of descriptors (BRIEF, ORB, FREAK, AKAZE and SIFT) and make them selectable by setting a string accordingly. For this, different string names are created (line 81-87), and depending upon the uncommented string, a different function is called (line 93-104)
+
+## MP.5 Descriptor Matching
+In this section FLANN matching as well as k-nearest neighbor selection were implemented. 
+
+## MP.6 Descriptor Distance Ratio	
+In this section K-Nearest-Neighbor matching with K=2 was implemented along with the descriptor distance ratio test, which looks at the ratio of best vs. second-best match and keeps the match if only their ratio is less than 0.8.
+
+## MP.7 Performance Evaluation 1
+In this section all the different keypoint detectors were run on all the image sequences and following attributes were compared. <b>Keypoint Detector Name</b>, <b>Total Keypoints Detected</b>, <b> Keypoints on the Vehicle</b>, <b> Neighbourhood size</b>.
+
+## MP.8 MP.9 Performance Evaluation 2 & 3
+In this section all the possible combinations of the detectors and descriptors were logged. 
