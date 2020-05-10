@@ -44,9 +44,9 @@ In this section K-Nearest-Neighbor matching with K=2 was implemented along with 
 
 ## MP.7 Performance Evaluation 1
 In this section all the different keypoint detectors were run on all the image sequences and following attributes were compared. <b>Keypoint Detector Name</b>, <b>Total Keypoints Detected</b>, <b> Keypoints on the Vehicle</b>, <b> Neighbourhood size</b>.
-Output Spreadsheet - [MP7 Performance Eval](/outputs/MP7. KeyPoint Detectors - output.csv)
+Output Spreadsheet - [MP7 Performance Eval](outputs/MP7. KeyPoint Detectors - output.csv)
 
 ## MP.8 MP.9 Performance Evaluation 2 & 3
 In this section all the possible combinations of the detectors and descriptors are compared. And for each combination, detector name, detector time, descriptor name and descriptor time was logged.
-Output Spreadsheet - [MP8 and MP9 Performance Eval](/outputs/MP.8 and MP.9 Detectors and Descriptors - output2.csv)
+Output Spreadsheet - [MP8 and MP9 Performance Eval](outputs/MP.8 and MP.9 Detectors and Descriptors - output2.csv)
 
