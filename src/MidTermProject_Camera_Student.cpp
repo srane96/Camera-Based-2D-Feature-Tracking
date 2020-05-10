@@ -65,7 +65,7 @@ int main(int argc, const char *argv[])
         dataBuffer.push_back(frame);
 
         // check dataBuffer size and pop front element if it greater than dataBufferSize
-        if(dataBuffer.size() > 2)
+        if(dataBuffer.size() > dataBufferSize)
             dataBuffer.erase(dataBuffer.begin());
         //// EOF STUDENT ASSIGNMENT
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
