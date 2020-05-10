@@ -45,8 +45,18 @@ In this section K-Nearest-Neighbor matching with K=2 was implemented along with 
 ## MP.7 Performance Evaluation 1
 In this section all the different keypoint detectors were run on all the image sequences and following attributes were compared. <b>Keypoint Detector Name</b>, <b>Total Keypoints Detected</b>, <b> Keypoints on the Vehicle</b>, <b> Neighbourhood size</b>.
 Output Spreadsheet - [MP7 Performance Eval](outputs/MP7.KeyPointDetectors-output.csv)
+<b> Brisk Was Able to find the most number of keypoints on the front vehicle </b>
 
 ## MP.8 MP.9 Performance Evaluation 2 & 3
 In this section all the possible combinations of the detectors and descriptors are compared. And for each combination, detector name, detector time, descriptor name and descriptor time was logged.
 Output Spreadsheet - [MP8 and MP9 Performance Eval](outputs/MP.8andMP.9DetectorsandDescriptors-output2.csv)
+FAST+ SIFT (fastest with reasonable amount of matches)
+BRIST + SIFT (more number of matches at the cost of delay )
+BRISK + BRIEF (Balanced )
+
+|Pref. Rank| Detector and Descriptor Combination  | Reason        |
+|----------| ------------------------------------ | ------------- |
+|1.| FAST detector with SIFT descriptor   | Fastest combination with reasonable amount of matches  |
+|2.| BRISK detector with SIFT descriptor  | Most number of matches at the cost of delay  |
+|3.| BRISK detector with BRIEF descriptor | Reasonable amount of matches with some delay|
 
